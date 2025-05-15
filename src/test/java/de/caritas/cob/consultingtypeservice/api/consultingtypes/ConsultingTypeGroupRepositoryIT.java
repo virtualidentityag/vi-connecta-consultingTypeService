@@ -2,6 +2,7 @@ package de.caritas.cob.consultingtypeservice.api.consultingtypes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -24,6 +25,7 @@ import org.springframework.test.context.TestPropertySource;
     classes = ConsultingTypeServiceApplication.class,
     initializers = MongoTestInitializer.class)
 @TestPropertySource(properties = "spring.profiles.active=testing")
+@TestPropertySource(properties = "multitenancy.enabled=false")
 class ConsultingTypeGroupRepositoryIT {
 
   @Autowired private ConsultingTypeLoader consultingTypeLoader;
@@ -40,8 +42,9 @@ class ConsultingTypeGroupRepositoryIT {
     final String GROUP_1 = "group1";
     final int CONSULTING_TYPE_ID_0 = 0;
     assertThat(result.get(GROUP_1), hasSize(1));
-    assertThat(result.get(GROUP_1).get(0).getId(), is(CONSULTING_TYPE_ID_0));
-    assertThat(result.get(GROUP_1).get(0).getGroups().contains(GROUP_1), is(true));
+    assertThat(result.get(GROUP_1), hasItem(hasProperty("id", is(CONSULTING_TYPE_ID_0))));
+    assertThat(result.get(GROUP_1), hasItem(hasProperty("groups", hasItem(GROUP_1))));
+
     final String GROUP_2 = "group2";
     final String GROUP_3 = "group3";
     final int CONSULTING_TYPE_ID_1 = 1;
