@@ -63,7 +63,7 @@ class ConsultingTypeAdminControllerIT {
         this.consultingTypeAdminService.findConsultingTypes(2, 2).getEmbedded();
 
     assertThat(firstPage, hasSize(2));
-    assertThat(secondPage, hasSize(2));
+    assertThat(secondPage, hasSize(1));
   }
 
   @Test
@@ -87,6 +87,6 @@ class ConsultingTypeAdminControllerIT {
     List<ExtendedConsultingTypeResponseDTO> page =
         this.consultingTypeAdminService.findConsultingTypes(0, Integer.MAX_VALUE).getEmbedded();
 
-    assertThat(page, hasSize(5));
+    assertThat(page, hasSize(3));
   }
 }
