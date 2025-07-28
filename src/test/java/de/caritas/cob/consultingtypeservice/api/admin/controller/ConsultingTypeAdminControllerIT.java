@@ -90,4 +90,3 @@ class ConsultingTypeAdminControllerIT {
     assertThat(page, hasSize(3));
   }
 }
-
